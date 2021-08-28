@@ -1,13 +1,19 @@
 #include "chucNang.h"
 
+#define X_MIN 60
+#define Y_MIN 58
+#define X_MAX 580
+#define Y_MAX 409
+
 extern int sizeRan;
 extern int diem;
 extern char *thanRan[2];
 
-int speed(300);
+int REFRESH_RATE(300);
 
 void KhoiDong()
 {
+    cleardevice();
     sizeRan = 5; //Đặt lại kích thước rắn
     taoRanLanDau(); //Tạo rắn lần đầu
     taoMoi(); // Tạo mồi
@@ -16,6 +22,7 @@ void KhoiDong()
 
 void Lap()
 {
+    static bool daTang = false;
     while(conSong())
     {
         anMoi(); //Có ăn mồi không
@@ -23,15 +30,21 @@ void Lap()
         CapNhatTrangThai(); //Cập nhật thông tin
 
         //nếu sizeRan tròn chục thì tăng tốc rắn lên 50 milis
-        if(sizeRan % 10 == 0)
+        if(sizeRan % 10 == 0 && !daTang)
         {
-            if(speed > 50)
+            if(REFRESH_RATE > 50)
             {
-                speed -= 50;
+                REFRESH_RATE -= 50;
             }
+            daTang = true;
         }
 
-        delay(speed);
+        if(sizeRan % 10 != 0 && daTang)
+        {
+            daTang = false;
+        }
+
+        delay(REFRESH_RATE);
     }
 }
 
@@ -41,7 +54,7 @@ void CapNhatTrangThai()
     settextstyle(SMALL_FONT, HORIZ_DIR, 5);
     setcolor(WHITE);
     char status[50];
-    sprintf(status, "Score: %d Length: %d Speed: %d", diem, sizeRan, 300 - speed + 10);
+    sprintf(status, "Score: %d Length: %d Speed: %d", diem, sizeRan, 300 - REFRESH_RATE + 10);
     outtextxy(0, 10, status);
 }
 
@@ -55,18 +68,37 @@ int khoiDongDoHoa()
 
 void TaoKhuVucChoi()
 {
-    int j_ngoai;
-    for(int i = 71; i <= 396; i += 13)
+    for(int y = Y_MIN; y <= Y_MAX; y += 13)
     {
-        putimage(60, i, thanRan[1], XOR_PUT);
-        for(int j = 60; j <= 580; j += 13)
+        putimage(60, y, thanRan[1], XOR_PUT);
+        for(int x = X_MIN + 13; x <= X_MAX - 13; x += 13)
         {
-            if(i == 71 || i == 396)
+            if(y == Y_MIN || y == Y_MAX)
             {
-                putimage(j, i, thanRan[1], XOR_PUT);
+                putimage(x, y, thanRan[1], XOR_PUT);
             }
-            j_ngoai = j;
         }
-        putimage(j_ngoai, i, thanRan[1], XOR_PUT);
+        putimage(X_MAX, y, thanRan[1], XOR_PUT);
     }
+}
+
+void tamDung()
+{
+    //Xóa hết phím còn tồn tại nếu có
+    while(kbhit())
+    {
+        getch();
+    }
+
+    outtextxy(0, 25, "Pause");
+    outtextxy(0, 40, "Press any key (except Enter) to continue...");
+
+    while(!kbhit())
+    {
+
+    }
+
+    outtextxy(0, 25, "                         ");
+    outtextxy(0, 40, "                                                                          ");
+    return;
 }

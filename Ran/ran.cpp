@@ -1,7 +1,16 @@
 #include "Ran.h"
+#include "chucNang.h"
 
 #define MaxSize 50
 #define Enter 13
+
+#define X_MIN 60
+#define Y_MIN 58
+#define X_MAX 580
+#define Y_MAX 409
+
+//Mảng chứa tọa độ khả dụng của mồi
+int x_moi_kha_dung[37], y_moi_kha_dung[24];
 
 //Các mảng toàn bộ lưu tọa độ của thân rắn
 int x_tren_cu[MaxSize], y_tren_cu[MaxSize], x_duoi_cu[MaxSize], y_duoi_cu[MaxSize]; //Tọa độ cũ của thân rắn
@@ -30,7 +39,7 @@ bool conSong()
     }
 
 
-    if(x_duoi_moi[0] <= 50 || y_duoi_moi[0] <= 50 || x_duoi_moi[0] >= getmaxx() - 50 || y_duoi_moi[0] >= getmaxy() - 50)
+    if(x_duoi_moi[0] <= X_MIN || y_duoi_moi[0] <= Y_MIN + 13 || x_duoi_moi[0] >= X_MAX || y_duoi_moi[0] >= Y_MAX)
     {
         outtextxy(100, 100, "DIE 1");
         return false;
@@ -38,15 +47,6 @@ bool conSong()
 
     for(int i = 1; i < sizeRan; i++)
     {
-        if(x_tren_moi[0] == x_duoi_moi[i] && y_tren_moi[0] == y_duoi_moi[i] && x_duoi_moi[0] == x_tren_moi[i] && y_duoi_moi[0] == y_tren_moi[i])
-        {
-            if(x_tren_moi[0] != 0 && y_tren_moi[0] != 0 && x_duoi_moi[0] != 0 && y_duoi_moi[0] != 0)
-            {
-                outtextxy(100, 100, "DIE 2");
-                return false;
-            }
-        }
-
         if(x_tren_moi[0] == x_tren_moi[i] && y_tren_moi[0] == y_tren_moi[i] && x_duoi_moi[0] == x_duoi_moi[i] && y_duoi_moi[0] == y_duoi_moi[i])
         {
             if(x_tren_moi[0] != 0 && y_tren_moi[0] != 0 && x_duoi_moi[0] != 0 && y_duoi_moi[0] != 0)
@@ -66,33 +66,48 @@ void taoMoi()
 
     if(x_moi == 0 && y_moi == 0) //Nếu là lần đầu
     {
-        x_moi = rand() % (getmaxx() - 60) + 60;
-        y_moi = rand() % (getmaxy() - 60) + 60;
+        int i = 0;
+        //Tạo tọa độ khả dụng cho mồi
+        for(int y = Y_MIN + 13; y < Y_MAX - 13 * 2; y += 13)
+        {
+            y_moi_kha_dung[i] = y;
+            i++;
+        }
+
+        i = 0;
+        for(int x = X_MIN + 13; x < X_MAX - 13 * 2; x += 13)
+        {
+            x_moi_kha_dung[i] = x;
+            i++;
+        }
+
+        //Chọn ngẫu nhiên vị trí mồi
+        x_moi = rand() % 37;
+        y_moi = rand() % 24;
 
         //Vẽ mồi tại vị trí trên
-        //Bán kính mồi = 5
         setcolor(GREEN);
         setfillstyle(SOLID_FILL, GREEN);
-        rectangle(x_moi - 6, y_moi - 6, x_moi + 6, y_moi + 6);
-        floodfill(x_moi + 1, y_moi + 1, GREEN);
+        rectangle(x_moi_kha_dung[x_moi], y_moi_kha_dung[y_moi], x_moi_kha_dung[x_moi] + 13, y_moi_kha_dung[y_moi] + 13);
+        floodfill(x_moi_kha_dung[x_moi] + 1, y_moi_kha_dung[y_moi] + 1, GREEN);
 
         //Lưu ảnh mồi
-        int soByteCan = imagesize(x_moi - 6, y_moi - 6, x_moi + 6, y_moi + 6);
+        int soByteCan = imagesize(x_moi_kha_dung[x_moi], y_moi_kha_dung[y_moi], x_moi_kha_dung[x_moi] + 13, y_moi_kha_dung[y_moi] + 13);
         moi = (char*)malloc(soByteCan);
-        getimage(x_moi - 6, y_moi - 6, x_moi + 6, y_moi + 6, moi);
+        getimage(x_moi_kha_dung[x_moi], y_moi_kha_dung[y_moi], x_moi_kha_dung[x_moi] + 13, y_moi_kha_dung[y_moi] + 13, moi);
     }
     else //Các lần tiếp theo
     {
         //Xóa ảnh mồi cũ
-        putimage(x_moi - 6, y_moi - 6, moi, XOR_PUT);
+        putimage(x_moi_kha_dung[x_moi], y_moi_kha_dung[y_moi], moi, XOR_PUT);
 
         //Lấy vị trí mồi mới
         while(true)
         {
             int x_moi_cu = x_moi, y_moi_cu = y_moi; //Lưu lại vị trí mồi cũ
 
-            x_moi = rand() % (getmaxx() - 60) + 60; //Sinh số ngẫu nhiên trong khoảng 55 -> (getmaxx() - 55)
-            y_moi = rand() % (getmaxy() - 60) + 60; //Sinh số ngẫu nhiên trong khoảng 55 -> (getmaxy() - 55)
+            x_moi = rand() % 37;
+            y_moi = rand() % 24;
 
             if(x_moi != x_moi_cu && y_moi != y_moi_cu) //Khi vị trí mồi mới khác vị trí cũ thì dừng lặp
             {
@@ -101,29 +116,20 @@ void taoMoi()
         }
 
         //Đưa ảnh mồi ra vị trí mới
-        putimage(x_moi - 6, y_moi - 6, moi, XOR_PUT);
+        putimage(x_moi_kha_dung[x_moi], y_moi_kha_dung[y_moi], moi, XOR_PUT);
     }
 }
 
 void anMoi()
 {
-    if(abs(x_duoi_moi[0] - 6 - x_moi) <= 5 && abs(y_duoi_moi[0] - 6 - y_moi) <= 5)
+    if(x_tren_moi[0] == x_moi_kha_dung[x_moi] && y_tren_moi[0] == y_moi_kha_dung[y_moi])
     {
         diem++;
-        taoThanMoi();
+        sizeRan++;
         taoMoi();
     }
 
     return;
-}
-
-void taoThanMoi()
-{
-    //Tăng kích thước rắn
-    if(sizeRan < MaxSize)
-    {
-        sizeRan++;
-    }
 }
 
 void taoRanLanDau()
@@ -199,16 +205,9 @@ void bamPhim()
         }
         else if(phim == Enter)
         {
-            outtextxy(300, 300, "Enter");
+            tamDung();
             return;
         }
-    }
-
-    //Nếu vẫn còn phím trong bộ đệm
-    //Xóa hết
-    while(kbhit())
-    {
-        getch();
     }
 
     diChuyen();

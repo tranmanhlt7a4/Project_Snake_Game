@@ -33,13 +33,6 @@ void taoMoi();
 void anMoi();
 
 /*
- * Hàm tăng sizeRan lên 1 đơn vị
- * Được gọi từ hàm anMoi()
- * Hàm không trả về giá trị nào
-*/
-void taoThanMoi();
-
-/*
  * Hàm kiểm tra sự kiện bấm phím điều khiển của người chơi
  * Phím di chuyển gồm a, w, s, d cho di chuyển sang trái lên trên, xuống dưới, sang phải
  * Phím Enter mã 13 dùng để tạm dừng chương trình

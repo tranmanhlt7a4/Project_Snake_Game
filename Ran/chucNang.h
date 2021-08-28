@@ -42,3 +42,10 @@ void TaoKhuVucChoi();
  * Hàm trả về kết quả của hàm graphresult()
 */
 int khoiDongDoHoa();
+
+/*
+ * Hàm tạm dừng trò chơi khi bấm phím Enter
+ * Hàm thông báo với text "Pause" tại tọa độ (0, 25) và text "Press any key (except Enter) to continue..." tại tọa độ (0, 39)
+ * Hàm không trả về giá trị
+*/
+void tamDung();
