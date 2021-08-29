@@ -3,3 +3,5 @@
 #include <conio.h>
 
 void menuBatDau();
+
+void menuHelp();

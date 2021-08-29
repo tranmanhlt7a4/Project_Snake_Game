@@ -5,6 +5,9 @@
 
 void menuBatDau()
 {
+start: //Nhãn để tạo lại menu khi thoát khỏi menu High Score và Help
+
+    cleardevice();//Xóa màn hình
     //Tọa độ giữa màn hình VGA 640 * 480
     int x_giua = 640 / 2, y_giua = 480 / 2;
 
@@ -115,13 +118,61 @@ void menuBatDau()
         break;
 
     case 1:
-        cleardevice();
-        outtextxy(100, 100, "HELP");
-        break;
+        menuHelp();
+        goto start;
 
     case 2:
-        cleardevice();
-        outtextxy(100, 100, "HIGH SCORE");
-
+        break;
     }
 }
+
+void menuHelp()
+{
+    cleardevice();
+    int x_giua = 640 / 2, y_giua = 480 / 2;
+
+    setcolor(RED);
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 4);
+    settextjustify(CENTER_TEXT, CENTER_TEXT);
+    outtextxy(x_giua, y_giua - 200, "HELP");
+
+
+    setcolor(BLUE);
+    settextstyle(TRIPLEX_FONT, HORIZ_DIR, 1);
+    outtextxy(x_giua - 190, y_giua - 150, "You use:");
+    setcolor(GREEN);
+    outtextxy(x_giua - 190, y_giua - 120, "        w to move up");
+    outtextxy(x_giua - 190, y_giua - 100, "       a to turn left");
+    outtextxy(x_giua - 190, y_giua - 80,  "             s to move down");
+    outtextxy(x_giua - 190, y_giua - 60,  "         d to turn right");
+    setcolor(BROWN);
+    outtextxy(x_giua - 10, y_giua - 30,  "You eat bait to increase your score and your ");
+    outtextxy(x_giua - 200, y_giua - 10, "snake's length");
+    outtextxy(x_giua - 10, y_giua + 20, "Your snake's speed will increase after each 5");
+    outtextxy(x_giua - 250, y_giua + 40, "scores");
+
+    setcolor(RED);
+    settextstyle(SMALL_FONT, HORIZ_DIR, 5);
+
+    //Tạo chữ nhấp nháy
+    while(!kbhit())
+    {
+        outtextxy(x_giua, y_giua + 200, "Tip: Press any key to return main menu.");
+        outtextxy(x_giua, y_giua + 200, "                                                                           ");
+        if(kbhit())
+        {
+            //Xóa hết bộ đệm
+            while(kbhit())
+            {
+                getch();
+            }
+            break;
+        }
+    }
+
+    //Đặt lại màu nền
+    setbkcolor(BLACK);
+    setfillstyle(SOLID_FILL, BLACK);
+    floodfill(10, 10, BLACK);
+}
+

@@ -35,8 +35,8 @@ void Lap()
         bamPhim(); //Điều khiển rắn
         CapNhatTrangThai(); //Cập nhật thông tin
 
-        //nếu sizeRan tròn chục thì tăng tốc rắn lên 50 milis
-        if(sizeRan % 5 == 0 && !daTang)
+        //nếu diem chia hết cho 5 thì tăng tốc rắn lên 30 milis
+        if(diem % 5 == 0 && !daTang)
         {
             if(REFRESH_RATE > 50)
             {
@@ -45,7 +45,7 @@ void Lap()
             daTang = true;
         }
 
-        if(sizeRan % 5 != 0 && daTang)
+        if(diem % 5 != 0 && daTang)
         {
             daTang = false;
         }
