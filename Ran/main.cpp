@@ -1,10 +1,10 @@
 #include <iostream>
+#include <stdio.h>
+#include <conio.h>
 #include "menu.h"
 #include "chucNang.h"
 
 using namespace std;
-
-#define ESC 27
 
 int main()
 {
@@ -16,11 +16,5 @@ int main()
 
     menuBatDau();
 
-    while(getch() != ESC)
-    {
-
-    }
-
-    closegraph();
     return 0;
 }

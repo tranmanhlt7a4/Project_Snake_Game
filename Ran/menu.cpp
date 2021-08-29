@@ -3,7 +3,13 @@
 
 #define Enter 13
 
-void menuBatDau()
+extern int diem;
+extern int isHighScore;
+extern int thoiGianChoi;
+extern int diemCao;
+extern int sizeRan;
+
+bool menuBatDau()
 {
 start: //Nhãn để tạo lại menu khi thoát khỏi menu High Score và Help
 
@@ -49,7 +55,7 @@ start: //Nhãn để tạo lại menu khi thoát khỏi menu High Score và Help
     outtextxy(x_giua, y_giua, "Help");
 
     //Chức năng 3: High score
-    outtextxy(x_giua, y_giua + 80, "High score");
+    outtextxy(x_giua, y_giua + 80, "Quit");
 
     //Tip
     setcolor(RED);
@@ -115,18 +121,20 @@ start: //Nhãn để tạo lại menu khi thoát khỏi menu High Score và Help
     case 0:
         KhoiDong();
         Lap();
-        break;
+        menuKetQua();
+        goto start;
 
     case 1:
-        menuHelp();
+        menuTroGiup();
         goto start;
 
     case 2:
-        break;
+        closegraph();
+        return false;
     }
 }
 
-void menuHelp()
+void menuTroGiup()
 {
     cleardevice();
     int x_giua = 640 / 2, y_giua = 480 / 2;
@@ -176,3 +184,77 @@ void menuHelp()
     floodfill(10, 10, BLACK);
 }
 
+void menuKetQua()
+{
+    //Xóa hết bộ đệm
+    while(kbhit())
+    {
+        getch();
+    }
+
+    cleardevice();
+    setcolor(RED);
+    setbkcolor(LIGHTCYAN);
+    setfillstyle(SOLID_FILL, LIGHTCYAN);
+    int x_giua = 640 / 2, y_giua = 480 / 2;
+    floodfill(0, 0, DARKGRAY);
+
+    //Khung menu
+    setcolor(RED);
+    setlinestyle(CENTER_LINE, 0, THICK_WIDTH);
+    setfillstyle(SOLID_FILL, LIGHTCYAN);
+    rectangle(x_giua - 150, y_giua - 150, x_giua + 150, y_giua + 150);
+    floodfill(x_giua, y_giua, RED);
+
+    //Tiêu đề menu
+    setcolor(LIGHTRED);
+    settextstyle(DEFAULT_FONT, HORIZ_DIR, 4);
+    settextjustify(CENTER_TEXT, CENTER_TEXT);
+    outtextxy(x_giua, y_giua - 140, "RESULT");
+
+    settextstyle(GOTHIC_FONT, HORIZ_DIR, 2);
+    char thongTin[30];
+    if(isHighScore)
+    {
+        sprintf(thongTin, "NEW HIGH SCORE");
+        outtextxy(x_giua, y_giua - 100, thongTin);
+    }
+
+    sprintf(thongTin, "High Score: %d", diemCao);
+    outtextxy(x_giua, y_giua - 30, thongTin);
+
+    sprintf(thongTin, "Score: %d", diem);
+    outtextxy(x_giua, y_giua, thongTin);
+
+    sprintf(thongTin, "Time: %ds", thoiGianChoi);
+    outtextxy(x_giua, y_giua + 30, thongTin);
+
+    sprintf(thongTin, "Length: %d", sizeRan);
+    outtextxy(x_giua, y_giua + 60, thongTin);
+
+    setcolor(RED);
+    settextstyle(SMALL_FONT, HORIZ_DIR, 5);
+
+    while(!kbhit())
+    {
+        outtextxy(x_giua, y_giua + 200, "Tip: Press any key to back to main menu");
+        outtextxy(x_giua, y_giua + 200, "                                                                                    ");
+
+        if(kbhit())
+        {
+            break;
+        }
+    }
+
+
+    //Xóa hết bộ đệm
+    while(kbhit())
+    {
+        getch();
+    }
+
+    //Đặt lại màu nền
+    setbkcolor(BLACK);
+    setfillstyle(SOLID_FILL, BLACK);
+    floodfill(10, 10, BLACK);
+}

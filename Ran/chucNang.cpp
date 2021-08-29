@@ -1,13 +1,31 @@
 #include "chucNang.h"
+#include "menu.h"
 
 #define X_MIN 60
 #define Y_MIN 58
 #define X_MAX 580
 #define Y_MAX 409
 
+#define MaxSize 50
+
 extern int sizeRan;
 extern int diem;
 extern char *thanRan[2];
+extern bool lanDau;
+//Mảng chứa tọa độ khả dụng của mồi
+extern int x_moi_kha_dung[37], y_moi_kha_dung[24];
+
+//Các mảng toàn bộ lưu tọa độ của thân rắn
+extern int x_tren_cu[MaxSize], y_tren_cu[MaxSize], x_duoi_cu[MaxSize], y_duoi_cu[MaxSize]; //Tọa độ cũ của thân rắn
+extern int x_tren_moi[MaxSize], y_tren_moi[MaxSize], x_duoi_moi[MaxSize], y_duoi_moi[MaxSize]; //Tọa độ mới của thân rắn
+
+extern char huong; //Lưu hướng hiện tại của rắn
+
+extern int x_moi, y_moi; //Biến lưu tọa độ mồi
+
+int diemCao;
+bool isHighScore(false);
+int thoiGianChoi;
 
 int REFRESH_RATE(300);
 
@@ -20,6 +38,28 @@ void KhoiDong()
     setfillstyle(SOLID_FILL, BLACK);
     floodfill(10, 10, BLACK);
 
+    //Đặt lại tọa độ
+    for(int i = 0; i < MaxSize; i++)
+    {
+        x_tren_moi[i] = y_tren_moi[i] = x_duoi_moi[i] = y_duoi_moi[i] = 0;
+        x_tren_cu[i] = y_tren_cu[i] = x_duoi_cu[i] = y_duoi_cu[i] = 0;
+    }
+
+    for(int i = 0; i < 37; i++)
+    {
+        x_moi_kha_dung[i] = 0;
+    }
+
+    for(int i = 0; i < 24; i++)
+    {
+        y_moi_kha_dung[i] = 0;
+    }
+
+    sizeRan = 5;
+    huong = 'd';
+    x_moi = y_moi = 0;
+    lanDau = true;
+    diem = 0;
     sizeRan = 5; //Đặt lại kích thước rắn
     taoRanLanDau(); //Tạo rắn lần đầu
     taoMoi(); // Tạo mồi
@@ -29,6 +69,8 @@ void KhoiDong()
 void Lap()
 {
     static bool daTang = false;
+    int batDau = time(0);
+
     while(conSong())
     {
         anMoi(); //Có ăn mồi không
@@ -51,6 +93,17 @@ void Lap()
         }
 
         delay(REFRESH_RATE);
+    }
+    int ketThuc = time(0);
+    thoiGianChoi = ketThuc - batDau;
+    if(diem > diemCao)
+    {
+        diemCao = diem;
+        isHighScore = true;
+    }
+    else
+    {
+        isHighScore = false;
     }
 }
 

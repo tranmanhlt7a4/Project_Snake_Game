@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 #include <conio.h>
-
+#include <ctime>
 #include "ran.h"
 
 /*
