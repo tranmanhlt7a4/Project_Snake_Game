@@ -1,2 +1,2 @@
 # Project_Snake_Game
-Project game snake with C, C++
+Project game snake with C++ Code
