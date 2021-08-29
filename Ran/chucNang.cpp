@@ -97,11 +97,17 @@ void tamDung()
     }
 
     outtextxy(0, 25, "Pause");
-    outtextxy(0, 40, "Press any key (except Enter) to continue...");
+    outtextxy(0, 40, "Press any key to continue...");
 
     while(!kbhit())
     {
 
+    }
+
+    //Xóa hết phím còn tồn tại nếu có
+    while(kbhit())
+    {
+        getch();
     }
 
     outtextxy(0, 25, "                         ");
