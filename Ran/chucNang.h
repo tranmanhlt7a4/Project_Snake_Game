@@ -45,7 +45,7 @@ int khoiDongDoHoa();
 
 /*
  * Hàm tạm dừng trò chơi khi bấm phím Enter
- * Hàm thông báo với text "Pause" tại tọa độ (0, 25) và text "Press any key (except Enter) to continue..." tại tọa độ (0, 39)
+ * Hàm thông báo với text "Pause" tại tọa độ (0, 25) và text "Press any key (except Enter) to continue..." tại tọa độ (0, 40)
  * Hàm không trả về giá trị
 */
 void tamDung();

@@ -14,6 +14,12 @@ int REFRESH_RATE(300);
 void KhoiDong()
 {
     cleardevice();
+
+    //Đặt lại màu nền
+    setbkcolor(BLACK);
+    setfillstyle(SOLID_FILL, BLACK);
+    floodfill(10, 10, BLACK);
+
     sizeRan = 5; //Đặt lại kích thước rắn
     taoRanLanDau(); //Tạo rắn lần đầu
     taoMoi(); // Tạo mồi
@@ -30,16 +36,16 @@ void Lap()
         CapNhatTrangThai(); //Cập nhật thông tin
 
         //nếu sizeRan tròn chục thì tăng tốc rắn lên 50 milis
-        if(sizeRan % 10 == 0 && !daTang)
+        if(sizeRan % 5 == 0 && !daTang)
         {
             if(REFRESH_RATE > 50)
             {
-                REFRESH_RATE -= 50;
+                REFRESH_RATE -= 30;
             }
             daTang = true;
         }
 
-        if(sizeRan % 10 != 0 && daTang)
+        if(sizeRan % 5 != 0 && daTang)
         {
             daTang = false;
         }

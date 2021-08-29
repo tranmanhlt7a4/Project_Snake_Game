@@ -1,4 +1,5 @@
 #include <iostream>
+#include "menu.h"
 #include "chucNang.h"
 
 using namespace std;
@@ -13,9 +14,7 @@ int main()
         exit(-1);
     }
 
-    KhoiDong();
-    Lap();
-
+    menuBatDau();
 
     while(getch() != ESC)
     {

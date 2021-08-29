@@ -39,7 +39,7 @@ bool conSong()
     }
 
 
-    if(x_duoi_moi[0] <= X_MIN || y_duoi_moi[0] <= Y_MIN + 13 || x_duoi_moi[0] >= X_MAX || y_duoi_moi[0] >= Y_MAX)
+    if(x_duoi_moi[0] <= X_MIN + 13 || y_duoi_moi[0] <= Y_MIN + 13 || x_duoi_moi[0] >= X_MAX || y_duoi_moi[0] >= Y_MAX)
     {
         outtextxy(100, 100, "DIE 1");
         return false;
@@ -184,7 +184,16 @@ void bamPhim()
     //Nếu có sự kiện bấm phím
     if(kbhit())
     {
-        char phim = getch(); //Bắt lấy phím vừa bấm
+        char phim;
+
+        while(true)
+        {
+            phim = getch();
+            if(phim != huong || !kbhit())
+            {
+                break;
+            }
+        }
 
         //Kiểm tra phím có hợp với hướng di chuyển không
         if(phim == 'a' && huong != 'd')
@@ -212,7 +221,6 @@ void bamPhim()
 
     diChuyen();
 }
-
 
 void diChuyen()
 {
@@ -262,7 +270,13 @@ void diChuyen()
         }
         else
         {
-            putimage(x_tren_cu[i], y_tren_cu[i], thanRan[1], XOR_PUT); //Xóa ảnh rắn
+            //Kiểm tra có tọa độ cũ không
+            //Nếu không thì không xóa hình
+            //Vì đây là thân mới vừa thêm
+            if(x_tren_cu[i] != 0)
+            {
+                putimage(x_tren_cu[i], y_tren_cu[i], thanRan[1], XOR_PUT); //Xóa ảnh rắn
+            }
 
             x_tren_moi[i + 1] = x_tren_cu[i];
             y_tren_moi[i + 1] = y_tren_cu[i];
@@ -275,7 +289,6 @@ void diChuyen()
             x_duoi_cu[i] = x_duoi_moi[i];
             y_duoi_cu[i] = y_duoi_moi[i];
         }
-
     }
 }
 
