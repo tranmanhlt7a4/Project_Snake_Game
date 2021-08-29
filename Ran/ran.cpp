@@ -27,11 +27,11 @@ int diem(0); //Điểm của người chơi
 
 int x_moi, y_moi; //Biến lưu tọa độ mồi
 
+//Biến lưu có phải lần đầu kiểm tra sống hay không
+bool lanDau = true;
+
 bool conSong()
 {
-    static bool lanDau(true); //Kiểm tra xem có phải là lần đầu gọi hàm không
-    //Lần đầu gọi hàm thì x_duoi_moi[0] == 0
-
     if(lanDau)
     {
         lanDau = false;
