@@ -228,7 +228,11 @@ void menuKetQua()
     sprintf(thongTin, "Score: %d", diem);
     outtextxy(x_giua, y_giua, thongTin);
 
+<<<<<<< HEAD
     sprintf(thongTin, "Time: %dm %ds", thoiGianChoi / 60, thoiGianChoi % 60);
+=======
+    sprintf(thongTin, "Time: %ds", thoiGianChoi);
+>>>>>>> e183c8d9e5ff553d3eb5e00a7fcf18e904f12a3d
     outtextxy(x_giua, y_giua + 30, thongTin);
 
     sprintf(thongTin, "Length: %d", sizeRan);
@@ -240,9 +244,13 @@ void menuKetQua()
     while(!kbhit())
     {
         outtextxy(x_giua, y_giua + 200, "Tip: Press any key to back to main menu");
+<<<<<<< HEAD
         delay(100);
         outtextxy(x_giua, y_giua + 200, "                                                                                    ");
         delay(100);
+=======
+        outtextxy(x_giua, y_giua + 200, "                                                                                    ");
+>>>>>>> e183c8d9e5ff553d3eb5e00a7fcf18e904f12a3d
 
         if(kbhit())
         {

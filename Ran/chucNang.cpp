@@ -60,7 +60,10 @@ void KhoiDong()
     x_moi = y_moi = 0;
     lanDau = true;
     diem = 0;
+<<<<<<< HEAD
     REFRESH_RATE = 300;
+=======
+>>>>>>> e183c8d9e5ff553d3eb5e00a7fcf18e904f12a3d
     sizeRan = 5; //Đặt lại kích thước rắn
     taoRanLanDau(); //Tạo rắn lần đầu
     taoMoi(); // Tạo mồi
