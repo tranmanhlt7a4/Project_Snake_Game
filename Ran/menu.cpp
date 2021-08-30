@@ -219,7 +219,7 @@ void menuKetQua()
     if(isHighScore)
     {
         sprintf(thongTin, "NEW HIGH SCORE");
-        outtextxy(x_giua, y_giua - 100, thongTin);
+        outtextxy(x_giua, y_giua - 90, thongTin);
     }
 
     sprintf(thongTin, "High Score: %d", diemCao);
@@ -242,7 +242,7 @@ void menuKetQua()
 
     while(!kbhit())
     {
-        outtextxy(x_giua, y_giua + 200, "Tip: Press any key to back to main menu");
+        outtextxy(x_giua, y_giua + 200, "Tip: Press Enter to back to main menu");
         delay(100);
         outtextxy(x_giua, y_giua + 200, "                                                                                    ");
         delay(100);
@@ -251,7 +251,16 @@ void menuKetQua()
 
         if(kbhit())
         {
-            break;
+            if(getch() == Enter)
+            {
+                break;
+            }
+
+            //Xóa hết bộ đệm
+            while(kbhit())
+            {
+                getch();
+            }
         }
     }
 
