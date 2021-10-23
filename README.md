@@ -3,5 +3,3 @@ Project game snake with C++ Code
 Use:
 + graphics.h library
 + g++ 32-bit
-
-No executable file
