@@ -4,3 +4,4 @@ Use:
 + graphics.h library
 + g++ 32-bit
 
+No executable file
